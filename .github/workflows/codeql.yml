@@ -51,30 +51,24 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      if: ${{ matrix.language == 'csharp'}}
+      if: ${{ matrix.language == 'csharp'}}
       run: |
         lscpu
         free -m
         set ASPNETCORE_ENVIRONMENT=Development
-        dotnet build --configuration Release     # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun     #   If the Autobuild fails above, remove it and uncomment the following three lines.
-    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.     # - run: |
-    #   echo "Run, Build Application using script"
-    #   ./location_of_script_within_repo/buildscript.sh     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with
-        category: "/language:${{matrix.language}}"
-        upload: False
-        output: sarif-results
-    - name: filter-sarif
-      uses: advanced-security/filter-sarif@v1
-      with:
-        patterns: |
-          -**/GetAccountDetailSummaryQuery.cs:**
-          -**/AddLeaveTypeCommand.cs:**
-        input: sarif-results/${{matrix.language}}.sarif
-        output: sarif-results/${{matrix.language}}.sarif
-    - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: sarif-results/${{matrix.language}}.sarif
+        dotnet build --configuration Releas   
+    
+    # ℹ️ Command-line programs to run using the OS shell.
+    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+
+    #   If the Autobuild fails above, remove it and uncomment the following three lines.
+    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
+
+    # - run: |
+    #     echo "Run, Build Application using script"
+    #     ./location_of_script_within_repo/buildscript.sh
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
